@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# Model weights — too large for GitHub (download via download_model.sh)
+models/
+
+# Generated outputs
+evaluation_report.txt
+
+# Claude Code internal files
+.claude/
