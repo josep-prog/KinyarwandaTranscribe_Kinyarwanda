@@ -10,6 +10,12 @@ models/
 
 # Generated outputs
 evaluation_report.txt
+eval_run*.log
+music_removal_comparison.log
+
+# Generated LM corpus + model (large, rebuildable via lm_rescore.py build)
+lm_corpus.txt
+lm_model.pkl
 
 # Claude Code internal files
 .claude/

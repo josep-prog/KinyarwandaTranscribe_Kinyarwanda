@@ -1,0 +1,23 @@
+Loading model...
+Loading LM ... Full report written to /home/mpinganzima/Public/Kinyarwanda_transcribe/evaluation_report_testing_data_general.txt
+done.
+[fleurs01] duration=8.5s transcribe_time=29.7s WER=15.4% CER=1.9%
+[fleurs02] duration=12.1s transcribe_time=33.4s WER=54.2% CER=20.2%
+[fleurs03] duration=9.2s transcribe_time=17.6s WER=11.8% CER=3.8%
+[fleurs04] duration=11.2s transcribe_time=17.9s WER=14.3% CER=1.8%
+[fleurs05] duration=10.1s transcribe_time=17.8s WER=18.8% CER=6.2%
+[fleurs06] duration=11.7s transcribe_time=18.0s WER=38.9% CER=17.4%
+[fleurs07] duration=12.9s transcribe_time=16.7s WER=50.0% CER=10.9%
+[fleurs08] duration=17.6s transcribe_time=17.1s WER=38.5% CER=5.8%
+[fleurs09] duration=15.0s transcribe_time=18.0s WER=26.1% CER=5.8%
+[fleurs10] duration=13.0s transcribe_time=17.9s WER=14.3% CER=2.0%
+[fleurs11] duration=8.5s transcribe_time=16.6s WER=7.7% CER=6.3%
+[fleurs12] duration=13.7s transcribe_time=17.8s WER=13.0% CER=2.8%
+[fleurs13] duration=8.8s transcribe_time=17.4s WER=33.3% CER=10.9%
+[fleurs14] duration=10.8s transcribe_time=18.8s WER=100.0% CER=65.8%
+[fleurs15] duration=12.4s transcribe_time=17.7s WER=63.2% CER=32.6%
+
+===== OVERALL (15 files) =====
+Average WER: 33.29%
+Average CER: 12.95%
+

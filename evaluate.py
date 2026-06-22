@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """Evaluate transcribe.py output against hand-typed ground-truth transcripts.
 
-For each testing_data/<name>.mp3, reads the matching testing_data/<name>.docx
-as the reference transcript, runs the Kinyarwanda model on the audio, and
-reports Word Error Rate (WER) and Character Error Rate (CER) between the two.
+For each <testdir>/<name>.<audio ext>, reads the matching <testdir>/<name>.docx
+or <name>.txt as the reference transcript, runs the Kinyarwanda model on the
+audio, and reports Word Error Rate (WER) and Character Error Rate (CER)
+between the two.
+
+By default runs against testing_data/. Pass --testdir to run against a
+different set (e.g. a held-out general-speech eval set), which writes its
+report to evaluation_report_<testdir name>.txt instead of overwriting the
+default report.
 """
 
+import argparse
 import re
 import sys
 import time
@@ -15,14 +22,16 @@ import docx
 import jiwer
 from faster_whisper import WhisperModel
 from normalize import normalize_hypothesis
+from lm_rescore import correct_words
 
 MODEL_DIR = Path(__file__).parent / "models" / "whisper-large-v3-turbo-kinyarwanda-ct2"
-TESTING_DIR = Path(__file__).parent / "testing_data"
-REPORT_PATH = Path(__file__).parent / "evaluation_report.txt"
+AUDIO_EXTS = (".mp3", ".wav", ".m4a", ".flac", ".ogg")
 
 
-def get_reference_text(docx_path: Path) -> str:
-    document = docx.Document(str(docx_path))
+def get_reference_text(ref_path: Path) -> str:
+    if ref_path.suffix == ".txt":
+        return ref_path.read_text(encoding="utf-8").strip()
+    document = docx.Document(str(ref_path))
     paragraphs = [p.text.strip() for p in document.paragraphs if p.text.strip()]
     return " ".join(paragraphs)
 
@@ -39,14 +48,32 @@ def normalize(text: str) -> str:
     return text
 
 
+def find_reference(audio_path: Path) -> Path | None:
+    for ext in (".docx", ".txt"):
+        ref_path = audio_path.with_suffix(ext)
+        if ref_path.exists():
+            return ref_path
+    return None
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--testdir", default="testing_data",
+                         help="Directory of audio files + matching .docx/.txt references")
+    args = parser.parse_args()
+
+    testing_dir = Path(__file__).parent / args.testdir
+    report_path = (Path(__file__).parent / "evaluation_report.txt" if args.testdir == "testing_data"
+                   else Path(__file__).parent / f"evaluation_report_{testing_dir.name}.txt")
+
     pairs = []
-    for mp3_path in sorted(TESTING_DIR.glob("*.mp3")):
-        docx_path = mp3_path.with_suffix(".docx")
-        if docx_path.exists():
-            pairs.append((mp3_path, docx_path))
+    audio_paths = [p for p in testing_dir.iterdir() if p.suffix.lower() in AUDIO_EXTS]
+    for audio_path in sorted(audio_paths):
+        ref_path = find_reference(audio_path)
+        if ref_path:
+            pairs.append((audio_path, ref_path))
         else:
-            print(f"Skipping {mp3_path.name}: no matching .docx", file=sys.stderr)
+            print(f"Skipping {audio_path.name}: no matching .docx/.txt reference", file=sys.stderr)
 
     pairs.sort(key=lambda p: int(re.search(r"(\d+)", p[0].stem).group()))
 
@@ -58,14 +85,14 @@ def main():
     total_cer = 0.0
     n = 0
 
-    for mp3_path, docx_path in pairs:
-        name = mp3_path.stem
-        reference = get_reference_text(docx_path)
+    for audio_path, ref_path in pairs:
+        name = audio_path.stem
+        reference = get_reference_text(ref_path)
         ref_norm = normalize(reference)
 
         start = time.time()
         segments, info = model.transcribe(
-            str(mp3_path),
+            str(audio_path),
             # The model repurposes Whisper's "sw" (Swahili) language token for Kinyarwanda.
             language="sw",
             task="transcribe",
@@ -81,6 +108,7 @@ def main():
         hypothesis = " ".join(seg.text.strip() for seg in segments)
         elapsed = time.time() - start
         hypothesis = normalize_hypothesis(hypothesis)
+        hypothesis = correct_words(hypothesis)
         hyp_norm = normalize(hypothesis)
 
         wer = jiwer.wer(ref_norm, hyp_norm)
@@ -114,8 +142,8 @@ def main():
     print(summary)
     report_lines.insert(0, summary)
 
-    REPORT_PATH.write_text("\n".join(report_lines), encoding="utf-8")
-    print(f"Full report written to {REPORT_PATH}", file=sys.stderr)
+    report_path.write_text("\n".join(report_lines), encoding="utf-8")
+    print(f"Full report written to {report_path}", file=sys.stderr)
 
 
 if __name__ == "__main__":

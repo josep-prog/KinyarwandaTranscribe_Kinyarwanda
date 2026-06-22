@@ -1,0 +1,214 @@
+
+===== OVERALL (15 files) =====
+Average WER: 33.29%
+Average CER: 12.95%
+
+===== fleurs01 =====
+Audio duration: 8.5s | Transcribe time: 29.7s
+WER: 15.38% | CER: 1.89%
+
+--- REFERENCE (normalized) ---
+igihe ubutunzi bwose buriho bukoreshwa neza mu mashami y'ikigo akarusho n'umwimerere bishobora kwigaragaza
+
+--- HYPOTHESIS (normalized) ---
+igihe ubutunzi bwose biriho gukoreshwa neza mu mashami y'ikigo akarusho n'umwimerere bishobora kwigaragaza
+
+--- HYPOTHESIS (raw model output) ---
+Igihe ubutunzi bwose biriho gukoreshwa neza mu mashami y'ikigo, akarusho n'umwimerere bishobora kwigaragaza.
+
+
+===== fleurs02 =====
+Audio duration: 12.1s | Transcribe time: 33.4s
+WER: 54.17% | CER: 20.22%
+
+--- REFERENCE (normalized) ---
+gahunda yo guhagarika ingendo irahinduka ariko kuva mu mpera za werurwe inyinshi zahagaritswe bitewe na koronavirusi ntizigere muri nyakanga 2020 igihe olempikie yari iteganyijwe
+
+--- HYPOTHESIS (normalized) ---
+gahunda yo gukarika ingendo irahinduka ariko kuva mu mpera zawerurwe nyinshi zagaritswe bitewe na korona virusi ntizigera muri nyakangabiri na makumyabiri igihe urembye icyo yari iteganyijwe
+
+--- HYPOTHESIS (raw model output) ---
+gahunda yo gukarika ingendo irahinduka ariko kuva mu mpera zawerurwe, nyinshi zagaritswe bitewe na korona virusi ntizigera muri nyakangabiri na makumyabiri igihe urembye icyo yari iteganyijwe.
+
+
+===== fleurs03 =====
+Audio duration: 9.2s | Transcribe time: 17.6s
+WER: 11.76% | CER: 3.81%
+
+--- REFERENCE (normalized) ---
+kugira ngo ubone neza hong kong va muri icyo kibaya maze werekeze ahateganye n'inkombe y'amazi ya kowloon
+
+--- HYPOTHESIS (normalized) ---
+kugira ngo ubone neza hong kong uva muri icyo kibaya maze werekeze ahateganye n'inkombe y'amazi ya kolo
+
+--- HYPOTHESIS (raw model output) ---
+kugira ngo ubone neza Hong Kong, uva muri icyo kibaya maze werekeze ahateganye n'inkombe y'amazi ya kolo.
+
+
+===== fleurs04 =====
+Audio duration: 11.2s | Transcribe time: 17.9s
+WER: 14.29% | CER: 1.82%
+
+--- REFERENCE (normalized) ---
+nk'igisubizo gahunda yo gukorera hamwe nk'ikigo hagamijwe kunesha inzitizi ishobora kuganisha kuri gahunda yo guhanga ibishya kugira ngo isubize ibibazo by'abakiliya
+
+--- HYPOTHESIS (normalized) ---
+nk'igisubizo gahunda yo gukorera hamwe nk'ikigo hagamijwe kunesha inzitizi ishobora kuganisha kuri gahunda ho guhanga bishya kugira ngo usubize ibibazo by'abakiliya
+
+--- HYPOTHESIS (raw model output) ---
+Nk'igisubizo gahunda yo gukorera hamwe nk'ikigo hagamijwe kunesha inzitizi, ishobora kuganisha kuri gahunda ho guhanga bishya kugira ngo usubize ibibazo by'abakiliya.
+
+
+===== fleurs05 =====
+Audio duration: 10.1s | Transcribe time: 17.8s
+WER: 18.75% | CER: 6.25%
+
+--- REFERENCE (normalized) ---
+witondere kutemerera umwenda gushyuha cyane ari byo bishobora gutera kugabanuka k'umwenda cyangwa se byiyongereyeho ukaba washya
+
+--- HYPOTHESIS (normalized) ---
+witondere kutemere umwenda gushyuha cyane ari byo bishobora gutera kugabanuka n'umwenda cyangwa se ibyongeyeho ukaba washya
+
+--- HYPOTHESIS (raw model output) ---
+Witondere kutemere umwenda gushyuha cyane, ari byo bishobora gutera kugabanuka n'umwenda cyangwa se ibyongeyeho ukaba washya.
+
+
+===== fleurs06 =====
+Audio duration: 11.7s | Transcribe time: 18.0s
+WER: 38.89% | CER: 17.36%
+
+--- REFERENCE (normalized) ---
+ubushakashatsi bwo mu kinyejana cya 20 bwerekanye ko hari ibice bibiri byo guhindura isano ndanga yihishe kandi igararara
+
+--- HYPOTHESIS (normalized) ---
+ubushakashatsi bw'umukinnyi ijana na makumyabiri bwerekanye ko hari ibice bibiri byo guhindura isano nsanga yihishe kandi igaragara
+
+--- HYPOTHESIS (raw model output) ---
+ubushakashatsi bw'umukinnyi ijana na makumyabiri bwerekanye ko hari ibice bibiri byo guhindura isano nsanga yihishe kandi igaragara.
+
+
+===== fleurs07 =====
+Audio duration: 12.9s | Transcribe time: 16.7s
+WER: 50.00% | CER: 10.92%
+
+--- REFERENCE (normalized) ---
+amatsinda atagaragara agengwa n'ibipimo bimwe by'ubudashyikirwa nk'amatsinda asanzwe ariko habaho amatandukaniro matoya
+
+--- HYPOTHESIS (normalized) ---
+matsinda atagaragara agenga n'ibipimo bimwe zudashyikirwa n'amatsinda asanzwe ariko habaho amatandukanye aru matoya
+
+--- HYPOTHESIS (raw model output) ---
+matsinda atagaragara agenga n'ibipimo bimwe zudashyikirwa n'amatsinda asanzwe ariko habaho amatandukanye aru matoya.
+
+
+===== fleurs08 =====
+Audio duration: 17.6s | Transcribe time: 17.1s
+WER: 38.46% | CER: 5.76%
+
+--- REFERENCE (normalized) ---
+si bwo bwonyine nyamara uburyo bw'igerageza n'igerageza ni igenzura rikoreshwa mu gukuraho zimwe mu ntekerezo zishoboka kubaza ibibazo no kwitegereza na byo bigenga ubushakashatsi bwa siyansi
+
+--- HYPOTHESIS (normalized) ---
+sibwa bonyine nyamara uburyo bwegerageza n'igeragezane agenzura zikoreshwa mu gukuraho zimwe mu ntekerezo zeshoboka kubaza ibibazo no kwitegereza na byo bigenda ubushakashatsi bwa siyansi
+
+--- HYPOTHESIS (raw model output) ---
+Sibwa bonyine nyamara uburyo bwegerageza n'igeragezane agenzura zikoreshwa mu gukuraho zimwe mu ntekerezo zeshoboka kubaza ibibazo no kwitegereza na byo bigenda ubushakashatsi bwa siyansi.
+
+
+===== fleurs09 =====
+Audio duration: 15.0s | Transcribe time: 18.0s
+WER: 26.09% | CER: 5.79%
+
+--- REFERENCE (normalized) ---
+uburyo bw'ubufasha bw'imyiyigire butaboneka buba buri muri porogaramu ya mudasobwa kandi bugamije kubaza gutegeka no gusobanura inzira zikurikizwa zishobora kugora umunyeshuri gukora wenyine
+
+--- HYPOTHESIS (normalized) ---
+uburyo bw'ubufasha bw'imwigire butaboneka baburiwe muri porogaramu ya mudasobwa kandi bigamije kubaza gutegeka no gusobanura inzira zikurikizwe zishobora kugira umunyeshuri gukora wenyine
+
+--- HYPOTHESIS (raw model output) ---
+uburyo bw'ubufasha bw'imwigire butaboneka baburiwe muri porogaramu ya mudasobwa kandi bigamije kubaza gutegeka no gusobanura inzira zikurikizwe zishobora kugira umunyeshuri gukora wenyine
+
+
+===== fleurs10 =====
+Audio duration: 13.0s | Transcribe time: 17.9s
+WER: 14.29% | CER: 2.04%
+
+--- REFERENCE (normalized) ---
+hashobora kubaho ibibaya byinshi ku ruhande ruri hafi kubera ko igice cy'inyuma cy'ubutaka ari gito byoroheye amahindure kuzamuka akagera ku butaka
+
+--- HYPOTHESIS (normalized) ---
+ashobora kubaho bibaya byinshi ku ruhande ruri hafi kubera ko igice cy'inyuma cy'ubutaka ari gito byoroheye amahindure kuzamuka akageza ku butaka
+
+--- HYPOTHESIS (raw model output) ---
+ashobora kubaho bibaya byinshi ku ruhande ruri hafi kubera ko igice cy'inyuma cy'ubutaka ari gito Byoroheye amahindure kuzamuka akageza ku butaka
+
+
+===== fleurs11 =====
+Audio duration: 8.5s | Transcribe time: 16.6s
+WER: 7.69% | CER: 6.32%
+
+--- REFERENCE (normalized) ---
+ibimera byikorera ibyo kurya byifashishije izuba mu buryo bwa fotosinteze bitanga kandi igicucu
+
+--- HYPOTHESIS (normalized) ---
+ibimera byikorera ibyo kurya kandi byifashishije izuba mu buryo bwa fotosinteze bitanga kandi igicucu
+
+--- HYPOTHESIS (raw model output) ---
+Ibimera byikorera ibyo kurya kandi byifashishije izuba mu buryo bwa fotosinteze, bitanga kandi igicucu
+
+
+===== fleurs12 =====
+Audio duration: 13.7s | Transcribe time: 17.8s
+WER: 13.04% | CER: 2.76%
+
+--- REFERENCE (normalized) ---
+abahanga mu bya siyansi basobanukiwe uko imibumbe yirema cyane cyane uko isi yiremye kuva utubumbe duto two mu kirere twagongana n'isi kera cyane
+
+--- HYPOTHESIS (normalized) ---
+abahanga mu bya siyansi basobanukiwe uko imibumbe yirema cyane cyane uko isi yaremye kuva utubumbe muto two mu kirere twakungana n'isi kera cyane
+
+--- HYPOTHESIS (raw model output) ---
+abahanga mu bya siyansi basobanukiwe uko imibumbe yirema, cyane cyane uko isi yaremye kuva utubumbe muto two mu kirere twakungana n'isi kera cyane.
+
+
+===== fleurs13 =====
+Audio duration: 8.8s | Transcribe time: 17.4s
+WER: 33.33% | CER: 10.87%
+
+--- REFERENCE (normalized) ---
+giancarlo fisichella yananiwe kuyobora imodoka ye ahagarika isiganwa nyuma gato yo gutangira
+
+--- HYPOTHESIS (normalized) ---
+iya ni karol fisicela yananiwe kuyobora imodoka ye ahagarika isiganwa nyuma gato yo gutangira
+
+--- HYPOTHESIS (raw model output) ---
+Iya ni Karol Fisicela yananiwe kuyobora imodoka ye ahagarika isiganwa nyuma gato yo gutangira
+
+
+===== fleurs14 =====
+Audio duration: 10.8s | Transcribe time: 18.8s
+WER: 100.00% | CER: 65.79%
+
+--- REFERENCE (normalized) ---
+ku wa 15 kanama 1940 ibihugu byishyize hamwe byateye mu majyepfo y'ubufaransa icyo gitero cyiswe operation dragoon
+
+--- HYPOTHESIS (normalized) ---
+uwa cumi na gatanu kanoma igihumbi kimwe magana cyenda na mirongo ine ibihugu byishyize hamwe bateye mu majyepfo y'ubufaraza icyo gitero kigwi opaloresheni deragoni
+
+--- HYPOTHESIS (raw model output) ---
+uwa cumi na gatanu kanoma igihumbi kimwe magana cyenda na mirongo ine ibihugu byishyize hamwe bateye mu majyepfo y'ubufaraza icyo gitero kigwi opaloresheni deragoni.
+
+
+===== fleurs15 =====
+Audio duration: 12.4s | Transcribe time: 17.7s
+WER: 63.16% | CER: 32.59%
+
+--- REFERENCE (normalized) ---
+archipelago iherereye mu birometero 120 by'amajyaruguru ya peninsura ikinini ni ikirwa cya king george gituranye na villa las estrellas
+
+--- HYPOTHESIS (normalized) ---
+areshiperago iherereye mu berometero ijana na makumyabiri by'amajyaruguru ya peninsura kinini ni kirwa cya kindi joji gituranye na sila resiterasi
+
+--- HYPOTHESIS (raw model output) ---
+areshiperago iherereye mu berometero ijana na makumyabiri by'amajyaruguru ya peninsura, kinini ni kirwa cya kindi joji gituranye na sila resiterasi.
+

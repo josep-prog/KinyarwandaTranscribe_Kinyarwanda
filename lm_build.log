@@ -1,0 +1,4 @@
+Training 5-gram LM from /home/mpinganzima/Public/Kinyarwanda_transcribe/lm_corpus.txt ...
+  0/82,624 lines  10,000/82,624 lines  20,000/82,624 lines  30,000/82,624 lines  40,000/82,624 lines  50,000/82,624 lines  60,000/82,624 lines  70,000/82,624 lines  80,000/82,624 lines
+Vocab size: 95,493  N-grams: 2,091,140
+Model saved to /home/mpinganzima/Public/Kinyarwanda_transcribe/lm_model.pkl (47.6 MB)
