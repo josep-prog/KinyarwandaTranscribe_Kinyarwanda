@@ -259,7 +259,7 @@ def normalize_hypothesis(text: str) -> str:
     for pattern, replacement in WORD_MERGES:
         text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
 
-    # Layer 2 + 3: token-level proper-noun sub + common-word fix + ortho fix
+    # Layer 2: token-level proper-noun sub + common-word fix
     tokens = text.split()
     result = []
     for tok in tokens:
@@ -269,6 +269,11 @@ def normalize_hypothesis(text: str) -> str:
         elif lower in COMMON_WORD_FIXES:
             result.append(COMMON_WORD_FIXES[lower])
         else:
-            fixed = _ortho_fix(lower)
-            result.append(fixed if (fixed and fixed != lower) else tok)
+            # kin_ortho_fix (_ortho_fix) is intentionally not called here: its
+            # vowel-assimilation rule over-fires on already-correct words
+            # (e.g. mirongo -> merongo, ibyishimo -> ibyeshimo), directly
+            # undoing the fixes above. Measured 9/2672 real hypothesis words
+            # touched, all regressions. Re-enable only after that rule is
+            # fixed on the kinyarwanda_nlp side.
+            result.append(tok)
     return " ".join(result)

@@ -1,3 +1,6 @@
 faster-whisper>=1.2.1
 python-docx>=1.2.0
 jiwer>=4.0.0
+# kenlm's PyPI wheel fails to build on Python 3.13 (stale Cython output vs
+# new C API) -- run ./build_kenlm_tools.sh instead of plain pip install.
+kenlm>=0.2.0

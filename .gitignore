@@ -17,5 +17,16 @@ music_removal_comparison.log
 lm_corpus.txt
 lm_model.pkl
 
+# KenLM build artifacts (rebuildable via build_kenlm_tools.sh + lm_rescore.py build)
+kenlm_bin/
+kenlm_model.arpa
+kenlm_model.binary
+
+# Session/build logs
+eval_general*.log
+kenlm_build.log
+lm_build*.log
+scrape_rerun.log
+
 # Claude Code internal files
 .claude/

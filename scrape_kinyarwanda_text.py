@@ -27,6 +27,22 @@ HEADERS = {"User-Agent": "KinyarwandaLM/1.0 (lm expansion bot; kinyarwanda-stt)"
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
+def resolve_url(href: str, base: str) -> str | None:
+    """Resolve a possibly-relative href against a site base URL.
+
+    Article links on these sites are commonly relative with NO leading
+    slash (e.g. "amakuru/u-rwanda/article/..."), which is relative to the
+    site root in practice here, not to the current page path.
+    """
+    if href.startswith("http"):
+        return href
+    if href.startswith("javascript:") or href.startswith("#"):
+        return None
+    if href.startswith("/"):
+        return base + href
+    return base + "/" + href
+
+
 def already_has(text: str, existing: set) -> bool:
     """Check if a normalized sentence already exists in the corpus."""
     norm = text.strip().lower()
@@ -65,6 +81,10 @@ def clean_text(text: str) -> str:
     """Clean extracted text into sentence-per-line format."""
     # Remove reference markers like [1], [citation needed], etc.
     text = re.sub(r"\[[\w\s]+\]", "", text)
+    # Remove MediaWiki section headers (e.g. "== Imiterere n'Imipaka ==") before
+    # whitespace collapse, so they don't fuse onto the next sentence with no
+    # separating punctuation.
+    text = re.sub(r"=+\s*[^=\n]+?\s*=+", " ", text)
     # Remove multiple spaces / newlines
     text = re.sub(r"\s+", " ", text).strip()
     if not text:
@@ -229,12 +249,15 @@ def scrape_igihe(existing: set[str]) -> int:
             article_urls = set()
             for a in links:
                 href = a["href"]
-                if "/amakuru/" in href or "/imikino/" in href or "/ubukungu/" in href \
-                   or "/ubuzima/" in href or "/imyidagaduro/" in href or "/amateka/" in href \
-                   or "/iteknoloji/" in href or "/urugendo/" in href:
-                    if href.startswith("/"):
-                        href = "https://igihe.com" + href
-                    if href not in article_urls:
+                # Real article links on the live site are relative paths with
+                # no leading slash (e.g. "amakuru/u-rwanda/article/..."), so
+                # the marker check must not require one.
+                is_category = any(m in href for m in
+                                  ("amakuru/", "imikino/", "ubukungu/", "ubuzima/",
+                                   "imyidagaduro/", "amateka/", "iteknoloji/", "urugendo/"))
+                if is_category and "article" in href:
+                    href = resolve_url(href, "https://igihe.com")
+                    if href and href not in article_urls:
                         article_urls.add(href)
             
             # Limit to first 20 articles per category
@@ -305,12 +328,12 @@ def scrape_kigalitoday(existing: set[str]) -> int:
             article_urls = set()
             for a in links:
                 href = a["href"]
-                if "/amakuru/" in href or "/imikino/" in href or "/ubuhinzi/" in href \
-                   or "/ubukungu/" in href or "/uburezi/" in href or "/ubuzima/" in href \
-                   or "/imyidagaduro/" in href or "/iteknoloji/" in href:
-                    if href.startswith("/"):
-                        href = "https://www.kigalitoday.com" + href
-                    if href not in article_urls:
+                is_category = any(m in href for m in
+                                  ("amakuru/", "imikino/", "ubuhinzi/", "ubukungu/",
+                                   "uburezi/", "ubuzima/", "imyidagaduro/", "iteknoloji/"))
+                if is_category and "article" in href:
+                    href = resolve_url(href, "https://www.kigalitoday.com")
+                    if href and href not in article_urls:
                         article_urls.add(href)
             
             for url in list(article_urls)[:15]:
@@ -375,11 +398,12 @@ def scrape_rba(existing: set[str]) -> int:
             article_urls = set()
             for a in links:
                 href = a["href"]
-                if "/amakuru/" in href or "/siporo/" in href or "/ubukungu/" in href \
-                   or "/ubuzima/" in href or "/uburezi/" in href or "/umuco/" in href:
-                    if href.startswith("/"):
-                        href = "https://www.rba.co.rw" + href
-                    if href not in article_urls:
+                is_category = any(m in href for m in
+                                  ("amakuru/", "siporo/", "ubukungu/", "ubuzima/",
+                                   "uburezi/", "umuco/"))
+                if is_category and "article" in href:
+                    href = resolve_url(href, "https://www.rba.co.rw")
+                    if href and href not in article_urls:
                         article_urls.add(href)
             
             for url in list(article_urls)[:15]:
