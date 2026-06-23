@@ -15,6 +15,7 @@ music_removal_comparison.log
 
 # Generated LM corpus + model (large, rebuildable via lm_rescore.py build)
 lm_corpus.txt
+lm_corpus.before_strip.txt
 lm_model.pkl
 
 # KenLM build artifacts (rebuildable via build_kenlm_tools.sh + lm_rescore.py build)
