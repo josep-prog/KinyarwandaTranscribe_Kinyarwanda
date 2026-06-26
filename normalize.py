@@ -214,6 +214,16 @@ PROPER_NOUNS: dict[str, str] = {
     "kinini":           "kinine",
     "kenkena":          "quinquina",
     "kenkenna":         "quinquina",
+
+    # Parc (French: national park / game reserve) — seen in nature documentaries
+    "parikiye":         "parc",
+    "parike":           "parc",
+
+    # Rhinella (cane toad species) — genus name mispronounced
+    "rinela":           "rhinella",
+
+    # Ireland — model Kinyarwandizes country names
+    "irilande":         "ireland",
 }
 
 # ── Word-merge split patterns ──────────────────────────────────────────────────
@@ -261,6 +271,11 @@ WORD_MERGES: list[tuple[str, str]] = [
     (r"\bn'abigisha\s+amategeko\b", "n'abigishamategeko"),
     # abigishamategeko without the n'
     (r"\babigisha\s+amategeko\b",   "abigishamategeko"),
+
+    # Kinyarwanda word fusions found in documentary transcripts
+    (r"\bntabwagorwa\b",            "ntabwo yagorwa"),   # "did not struggle" — fused negative
+    (r"\bibyonavugaga\b",           "ibyo navugaga"),    # "what I was saying" — fused relative
+    (r"\bz\s+ibyonnyi\b",           "z'ibyonnyi"),       # apostrophe split by space
 
     # Number-word fusions — model concatenates "magana/mirongo" + numeral
     # These are topic-agnostic: any audio with numbers will hit these.
@@ -311,6 +326,10 @@ COMMON_WORD_FIXES: dict[str, str] = {
     "ubonini":      "ubunini",
     # Killer (agent noun) — -ye vs -yi suffix confusion
     "umwicanye":    "umwicanyi",
+    # Thousands — model drops the i- noun class prefix
+    "bihumbi":      "ibihumbi",
+    # Vaccine/barrier — model adds spurious -yo suffix
+    "urukingyo":    "urukingo",
 }
 
 
