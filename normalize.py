@@ -3,7 +3,7 @@ Post-processing normalization for Kinyarwanda ASR output.
 
 Three-layer pipeline applied to raw model output before WER scoring:
   1. Word-merge splits   — re-splits common fused tokens
-  2. Proper-noun fixes   — canonical spellings for Biblical names
+  2. Proper-noun fixes   — canonical spellings for Biblical names + French/English loanwords
   3. Orthographic fixes  — kin_ortho_fix() from libkinyarwanda.so
 """
 
@@ -161,6 +161,59 @@ PROPER_NOUNS: dict[str, str] = {
     # Damasi (Damascus)
     "damase":       "damasi",
     "damasiko":     "damasi",
+
+    # ── French/English loanwords (code-switching) ─────────────────────────────
+    # Kinyarwanda speakers regularly switch to French/English for scientific and
+    # technical terms. The model (forced to language="sw") phonetically
+    # Kinyarwandizes these, producing multiple inconsistent variants per word.
+    # These entries restore the original French/English spelling.
+    # Evidence: observed across WARI (mosquito documentary) and UKO (Jamaica
+    # imbeba documentary). The same code-switching pattern appears in any topic
+    # (health, war, economics, tech) — only the specific loanwords change.
+
+    # Malaria — up to 5 different phonetic guesses for the same spoken word
+    "malariya":         "malaria",
+    "marariya":         "malaria",
+    "mararaya":         "malaria",
+    "malariyi":         "malaria",
+
+    # Plasmodium (malaria parasite) — up to 6 phonetic guesses
+    "pulasimodiyumu":   "plasmodium",
+    "pulasimodiyo":     "plasmodium",
+    "plusmodium":       "plasmodium",
+    "purasimodiyumu":   "plasmodium",
+
+    # Antenne (French: antenna / probe) — appeared 4× as "antene"
+    "antene":           "antenne",
+
+    # Insecticide — two inconsistent phonetic variants
+    "insegiside":       "insecticide",
+    "insegitiside":     "insecticide",
+
+    # Mangouste / mongoose — model produces two spellings for each language form
+    "mangusite":        "mangouste",
+    "mangusti":         "mangouste",
+    "manguze":          "mongoose",
+    "manguzi":          "mongoose",
+
+    # Dengue (fever) — single-letter acoustic error
+    "denge":            "dengue",
+
+    # Paludisme (French for malaria as a disease) — phonetic distortion
+    "paludizime":       "paludisme",
+
+    # Jamaica — country name consistently misspelled
+    "jamaika":          "jamaica",
+    "ijamaika":         "jamaica",
+    "ijamayika":        "jamaica",
+
+    # Essence (French: fuel / petrol) — relevant in economics, war, daily life
+    "esanse":           "essence",
+
+    # Kinine / quinquina (antimalarial medicine, French origin)
+    "kinini":           "kinine",
+    "kenkena":          "quinquina",
+    "kenkenna":         "quinquina",
 }
 
 # ── Word-merge split patterns ──────────────────────────────────────────────────
@@ -208,6 +261,18 @@ WORD_MERGES: list[tuple[str, str]] = [
     (r"\bn'abigisha\s+amategeko\b", "n'abigishamategeko"),
     # abigishamategeko without the n'
     (r"\babigisha\s+amategeko\b",   "abigishamategeko"),
+
+    # Number-word fusions — model concatenates "magana/mirongo" + numeral
+    # These are topic-agnostic: any audio with numbers will hit these.
+    (r"\bmaganabiri\b",             "magana abiri"),     # 200
+    (r"\bmaganatatu\b",             "magana tatu"),      # 300
+    (r"\bmaganane\b",               "magana ane"),       # 400
+    (r"\bmaganatanu\b",             "magana tanu"),      # 500
+    (r"\bmirongotatu\b",            "mirongo itatu"),    # 30
+
+    # Common Kinyarwanda function-word fusions
+    (r"\bburigihe\b",               "buri gihe"),        # "every time / always"
+    (r"\bkuberako\b",               "kubera ko"),        # "because"
 ]
 
 # ── Common word fixes (non-proper-noun acoustic errors seen in evaluation) ─────
@@ -242,6 +307,10 @@ COMMON_WORD_FIXES: dict[str, str] = {
     "merongo":      "mirongo",
     # "just as" — glottal elision written out
     "nkuko":        "nk'uko",
+    # Size/bigness — model drops the 'u' vowel in second syllable
+    "ubonini":      "ubunini",
+    # Killer (agent noun) — -ye vs -yi suffix confusion
+    "umwicanye":    "umwicanyi",
 }
 
 
