@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from faster_whisper import WhisperModel
+from kin_numbers import words_to_digits
 
 MODEL_DIR = Path(__file__).parent / "models" / "whisper-large-v3-turbo-kinyarwanda-ct2"
 
@@ -33,6 +34,9 @@ def main():
         help="Quantization/compute type (default: int8, fastest on CPU)",
     )
     parser.add_argument("--cpu-threads", type=int, default=0, help="Number of CPU threads (0 = auto)")
+    parser.add_argument("--digits", action="store_true",
+                        help="Convert spoken numbers to digit form (e.g. 'igihumbi kimwe' → '1000'). "
+                             "Display only — do not use for training data.")
     args = parser.parse_args()
 
     audio_path = Path(args.audio)
@@ -70,6 +74,8 @@ def main():
     lines = []
     for seg in segments:
         text = seg.text.strip()
+        if args.digits:
+            text = words_to_digits(text)
         if args.timestamps:
             lines.append(f"[{format_timestamp(seg.start)} -> {format_timestamp(seg.end)}] {text}")
         else:
