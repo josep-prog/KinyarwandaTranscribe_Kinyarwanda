@@ -206,6 +206,10 @@ PROPER_NOUNS: dict[str, str] = {
     "jamaika":          "jamaica",
     "ijamaika":         "jamaica",
     "ijamayika":        "jamaica",
+    "jamayika":         "jamaica",
+    "jyamaika":         "jamaica",
+    "jyamayika":        "jamaica",
+    "jamaikani":        "jamaican",
 
     # Essence (French: fuel / petrol) — relevant in economics, war, daily life
     "esanse":           "essence",
@@ -218,12 +222,125 @@ PROPER_NOUNS: dict[str, str] = {
     # Parc (French: national park / game reserve) — seen in nature documentaries
     "parikiye":         "parc",
     "parike":           "parc",
+    "pariki":           "parc",
 
     # Rhinella (cane toad species) — genus name mispronounced
     "rinela":           "rhinella",
 
     # Ireland — model Kinyarwandizes country names
     "irilande":         "ireland",
+
+    # ── New evidence (2026-06-30): WARI (mosquito), UKO JAMAICA (mongoose),
+    # and UDUSHYA (World Cup) documentaries. Same code-switching pattern as
+    # above — the human reference consistently quotes the original French/
+    # English spelling (often in curly quotes), the model phonetically
+    # Kinyarwandizes it. Counts verified against the 3 corrected .docx
+    # references before adding (skipping anything ambiguous, e.g. "Afurika"
+    # is the dominant Kinyarwanda spelling for Africa, not a model error).
+
+    # Équipe (French: team) — World Cup commentary
+    "ekipe":            "équipe",
+    "ekipa":            "équipe",
+    "ekipu":            "équipe",
+
+    # Brésil — country name
+    "burezile":         "brésil",
+    "burezil":          "brésil",
+    "berezere":         "brésil",
+
+    # Zaïre — historical country name (now DR Congo)
+    "zayire":           "zaïre",
+    "zayile":           "zaïre",
+    "zayili":           "zaïre",
+    "zayir":            "zaïre",
+    "zahire":           "zaïre",
+    "zaire":            "zaïre",   # accent dropped
+
+    # Mazout (French: fuel oil) — economics/war context
+    "mazutu":           "mazout",
+    "mazut":            "mazout",
+    "mazute":           "mazout",
+
+    # Countries/places — model Kinyarwandizes consistently across topics
+    "kanada":           "canada",
+    "megisike":         "mexique",
+    "katari":           "qatar",
+    "washingitoni":     "washington",
+    "furaride":         "floride",
+    "kwinzelande":      "queensland",
+    # NOTE: "isirayeli" is NOT remapped here — it's already mapped above to
+    # "isiraheli" (Biblical spelling) and that mapping is kept since it has
+    # more evidence behind it. The sports-context "israel" spelling seen in
+    # the World Cup documentary is a single-occurrence conflict; the dict
+    # is flat/context-free so only one mapping can win.
+    "pakisitani":       "pakistan",
+    "kolombiya":        "colombia",
+    "kolombeya":        "colombia",
+    "ekwador":          "équateur",
+    "dowa":             "doha",
+    "arabiya":          "arabie",
+    "sawudite":         "saoudite",
+    "wayi":             "hawaï",
+
+    # Australia — six distinct phonetic guesses observed in a single file
+    "ositerariya":      "australia",
+    "ositarariya":      "australia",
+    "wesitarariya":     "australia",
+    "oserariya":        "australia",
+    "oserariye":        "australia",
+    "wasitarariya":     "australia",
+
+    # Yugoslavia
+    "yugosilaviya":     "yugoslavia",
+    "yugosilavia":      "yugoslavia",
+    "yogosalaviya":     "yugoslavia",
+    "yigosilaviya":     "yugoslavia",
+
+    # Tech/brand terms — recurring sponsor-segment vocabulary
+    "watsapu":          "whatsapp",
+    "imeli":            "email",
+    "dani":             "van",
+
+    # Medical/scientific vocabulary (mosquito documentary)
+    "kanseri":          "cancer",
+    "diyabete":         "diabete",
+    "asanimetero":      "centimeter",
+    "imfuhahuje":       "infrarouge",
+    "egisosikelete":    "exosquelette",
+    "nekitare":         "nectar",
+    "migizomatozisi":   "myxomatosis",
+    "kaputere":         "capteur",
+    "agisitative":      "gustatif",
+    "anoferi":          "anopheles",
+    "ayedes":           "aedes",
+    "kiiregisi":        "culex",
+    "kareti":           "current",
+    "biyoloji":         "biology",
+    "nisegiside":       "insecticide",
+    "esansi":           "essence",
+    "global":           "globine",
+
+    # Invasive species documentary (mongoose/cane toad/python)
+    "bamizi":           "burmese",
+    "payifanzi":        "python",
+    "payitonizi":       "python",
+
+    # Cars/economics
+    "iburide":          "hybride",
+    "ibiride":          "hybride",
+    "yundayi":          "hyundai",
+    "kiya":             "kia",
+    "asiransi":         "assurance",
+
+    # Misc French loanwords (quoted code-switches in the reference)
+    "sisiteme":         "système",
+    "depanaje":         "dépannage",
+    "fiyuvure":         "fièvre",
+    "suwede":           "suède",
+    "teregarame":       "télégramme",
+    "siferike":         "sphérique",
+    "otirishi":         "autriche",
+    "otirisha":         "autriche",
 }
 
 # ── Word-merge split patterns ──────────────────────────────────────────────────
