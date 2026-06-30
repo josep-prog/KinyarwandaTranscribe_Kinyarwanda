@@ -215,7 +215,11 @@ PROPER_NOUNS: dict[str, str] = {
     "esanse":           "essence",
 
     # Kinine / quinquina (antimalarial medicine, French origin)
-    "kinini":           "kinine",
+    # Direction flipped 2026-06-30: the current WARI reference uses "kinini"
+    # 6x vs "kinine" 2x, and the model's raw output is consistently "kinini"
+    # already -- the old mapping was silently converting correct output into
+    # a mismatch. Map stray "kinine" output to the now-dominant "kinini".
+    "kinine":           "kinini",
     "kenkena":          "quinquina",
     "kenkenna":         "quinquina",
 
