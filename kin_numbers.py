@@ -67,14 +67,30 @@ _TOK_RE = re.compile(
     re.IGNORECASE,
 )
 
+# "ya cumi" (date/ordinal idiom) drops the i- prefix that SCALE_WORDS expects.
+# Normalize the bare form back to "icumi" before tokenizing.
+_CUMI_RE = re.compile(r"\bcumi\b", re.IGNORECASE)
+
 # Expand fused "n'UNITWORD" → "na UNITWORD" so the tokenizer sees two tokens.
 # Only expands when the word after n' is a known unit word — safe to apply
 # everywhere since it only fires on number vocabulary.
 _NFUSE_RE = re.compile(rf"\bn'({_unit_alt})\b", re.IGNORECASE)
 
+# ASR frequently drops the apostrophe from the n' elision above, producing a
+# bare "n" + UNIT fusion (e.g. "n'ine" → "nine"). Same expansion, no apostrophe.
+_NFUSE_NOAPOS_RE = re.compile(rf"\bn({_unit_alt})\b", re.IGNORECASE)
+
+# ASR also fuses the un-elided connector "na" directly onto the following unit
+# word with no separating space (e.g. "na gatandatu" → "nagatandatu").
+_NAFUSE_RE = re.compile(rf"\bna({_unit_alt})\b", re.IGNORECASE)
+
 
 def _preprocess(text: str) -> str:
-    return _NFUSE_RE.sub(r"na \1", text)
+    text = _CUMI_RE.sub("icumi", text)
+    text = _NFUSE_RE.sub(r"na \1", text)
+    text = _NAFUSE_RE.sub(r"na \1", text)
+    text = _NFUSE_NOAPOS_RE.sub(r"na \1", text)
+    return text
 
 
 # ── Parser ─────────────────────────────────────────────────────────────────────
@@ -117,32 +133,60 @@ def _parse(tokens: list[str]) -> int | None:
         """
         Parse the multiplier that follows miliyoni/igihumbi/ibihumbi.
         Without an explicit 'na' connector, the number that follows is
-        multiplicative, not additive.
-          ibihumbi eshatu       = 3 × 1000 = 3,000
-          ibihumbi icumi        = 10 × 1000 = 10,000
-          ibihumbi makumyabiri  = 20 × 1000 = 20,000
-          ibihumbi magana abiri = 200 × 1000 = 200,000
+        multiplicative, not additive. The multiplier itself can be compound
+        (hundreds + tens + units), e.g.:
+          ibihumbi eshatu              = 3 × 1000 = 3,000
+          ibihumbi icumi                = 10 × 1000 = 10,000
+          ibihumbi cumi na bibiri       = 12 × 1000 = 12,000
+          ibihumbi makumyabiri          = 20 × 1000 = 20,000
+          ibihumbi magana abiri         = 200 × 1000 = 200,000
+          ibihumbi magana abiri na mirongo itanu = 250 × 1000 = 250,000
         """
         nonlocal i
-        # Simple unit 1–9 (e.g. eshatu = 3)
-        u = try_unit()
-        if u is not None:
-            return u
-        # 10 (icumi)
-        if peek() == "icumi":
-            take()
-            return 10
-        # 20 (makumyabiri)
-        if peek() == "makumyabiri":
-            take()
-            return 20
+        total = 0
+        matched = False
+
         # Compound hundreds: magana N (e.g. magana arindwi = 700)
         if peek() == "magana":
             take()
             u = try_unit()
+            if u is None:
+                return 1   # "magana" must be followed by a unit; bail out conservatively
+            total += u * 100
+            matched = True
+            skip_na()
+        elif peek() == "ijana":
+            take()
+            total += 100
+            matched = True
+            skip_na()
+
+        # Tens
+        if peek() == "mirongo":
+            take()
+            u = try_unit()
             if u is not None:
-                return u * 100
-        return 1   # default: igihumbi alone = 1,000
+                total += u * 10
+                matched = True
+                skip_na()
+        elif peek() == "makumyabiri":
+            take()
+            total += 20
+            matched = True
+            skip_na()
+        elif peek() == "icumi":
+            take()
+            total += 10
+            matched = True
+            skip_na()
+
+        # Units
+        u = try_unit()
+        if u is not None:
+            total += u
+            matched = True
+
+        return total if matched else 1   # default: igihumbi alone = 1,000
 
     # millions
     if peek() == "miliyoni":
@@ -267,6 +311,14 @@ if __name__ == "__main__":
         ("icumi na kabiri",                                           "12"),
         ("makumyabiri",                                               "20"),
         ("ijana",                                                     "100"),
+        # "cumi" without the i- prefix (common in spoken dates: "itariki ya cumi n'imwe")
+        ("cumi n'imwe",                                               "11"),
+        # fused "na"+unit with no separating space
+        ("makumyabiri nagatandatu",                                   "26"),
+        # fused "n"+unit with the elision apostrophe dropped
+        ("ijana nine",                                                "104"),
+        # compound tens as a thousands multiplier (not just a simple unit)
+        ("ibihumbi cumi na bibiri",                                   "12000"),
         # non-number text should be untouched
         ("petero na yohani bagiye mu rugo",                          "petero na yohani bagiye mu rugo"),
     ]

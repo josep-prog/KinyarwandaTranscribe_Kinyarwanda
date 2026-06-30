@@ -333,6 +333,23 @@ COMMON_WORD_FIXES: dict[str, str] = {
 }
 
 
+# Punctuation that can flank a word without being part of it (sentence/clause
+# boundaries). Apostrophes are deliberately excluded — they're meaningful
+# Kinyarwanda elision marks and some PROPER_NOUNS/COMMON_WORD_FIXES keys
+# (e.g. "y'umujyi") contain them as part of the lookup key itself.
+_FLANKING_PUNCT = ".,;:!?\"«»“”…()[]"
+
+
+def _split_flanking_punct(tok: str) -> tuple[str, str, str]:
+    """Split a token into (leading punct, core word, trailing punct)."""
+    core = tok.strip(_FLANKING_PUNCT)
+    if not core:
+        return tok, "", ""
+    start = tok.index(core)
+    end = start + len(core)
+    return tok[:start], core, tok[end:]
+
+
 def normalize_hypothesis(text: str) -> str:
     """
     Apply post-processing to a raw ASR hypothesis string.
@@ -351,11 +368,15 @@ def normalize_hypothesis(text: str) -> str:
     tokens = text.split()
     result = []
     for tok in tokens:
-        lower = tok.lower()
+        # Strip flanking punctuation before lookup (e.g. "Jamaika," would
+        # otherwise never match the "jamaika" dictionary entry), then
+        # reattach it so the rest of the line is untouched.
+        prefix, core, suffix = _split_flanking_punct(tok)
+        lower = core.lower()
         if lower in PROPER_NOUNS:
-            result.append(PROPER_NOUNS[lower])
+            result.append(prefix + PROPER_NOUNS[lower] + suffix)
         elif lower in COMMON_WORD_FIXES:
-            result.append(COMMON_WORD_FIXES[lower])
+            result.append(prefix + COMMON_WORD_FIXES[lower] + suffix)
         else:
             # kin_ortho_fix (_ortho_fix) is intentionally not called here: its
             # vowel-assimilation rule over-fires on already-correct words
